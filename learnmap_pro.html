@@ -1,0 +1,346 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>LearnMap Pro</title><script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><meta name="color-scheme" content="dark light">
+<style>
+:root{--bg:#0b1220;--cd:#121c30;--bd:#22304d;--tx:#eaf1ff;--mu:#8fa3c4;--ac:#10b981;--g:#10b981;--y:#f5b942;--r:#ef5b5b;--b:#4aa3ff;--n:#44506a;--in:#0b1425;--s2:#1b2a47;--cd2:#15223a;--glow:#10324a55;--hov:#ffffff08;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 400px at 80% -10%,var(--glow),transparent),var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.logo{font-weight:800;font-size:19px}.logo b{color:var(--ac)}.pill{font-size:11px;padding:2px 9px;border-radius:99px;background:#10b98122;color:var(--ac);border:1px solid #10b98155}
+nav{display:flex;gap:4px;overflow-x:auto;flex:1}nav button{background:none;border:0;color:var(--mu);padding:7px 12px;border-radius:9px;cursor:pointer;font:inherit;white-space:nowrap}nav button.on{background:var(--cd);color:var(--tx);box-shadow:inset 0 -2px var(--ac)}
+main{max-width:1150px;margin:auto;padding:18px}h2{margin:4px 0 14px;font-size:20px}h3{margin:0 0 10px;font-size:14px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.grid{display:grid;gap:14px}.k5{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.c2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:linear-gradient(160deg,var(--cd2),var(--cd));border:1px solid var(--bd);border-radius:16px;padding:16px}.kpi b{display:block;font-size:28px}.kpi span{color:var(--mu);font-size:12px}
+.bar{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12px}.bar i{flex:0 0 130px;color:var(--mu);font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bar div{flex:1;background:var(--in);border-radius:6px;height:12px;overflow:hidden}.bar u{display:block;height:100%;border-radius:6px}
+.g{background:var(--g)}.y{background:var(--y)}.r{background:var(--r)}.b{background:var(--b)}.n{background:var(--n)}
+.tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:99px;color:#06101e;font-weight:600}
+button.p{background:var(--ac);color:#04130d;border:0;border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;font-weight:700}button.s{background:var(--s2);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:7px 12px;cursor:pointer;font:inherit}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid var(--bd);text-align:left;font-size:13px}th{color:var(--mu);font-weight:600}tr.cl{cursor:pointer}tr.cl:hover{background:var(--hov)}
+.tbl{overflow-x:auto}.mu{color:var(--mu)}.flow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.flow span{background:var(--in);border:1px solid var(--bd);padding:6px 10px;border-radius:10px}
+.modal{position:fixed;inset:0;background:#000a;display:flex;align-items:flex-end;justify-content:center;z-index:9}.modal>div{background:var(--cd);border:1px solid var(--bd);border-radius:18px 18px 0 0;max-width:640px;width:100%;max-height:85vh;overflow:auto;padding:20px}
+@media(min-width:700px){.modal{align-items:center}.modal>div{border-radius:18px}}
+.ok{color:var(--g)}.er{color:var(--r)}pre{background:var(--in);padding:10px;border-radius:10px;overflow-x:auto;font-size:12px}svg text{fill:var(--tx);font-size:12px}.node{cursor:pointer}
+input,select{background:var(--in);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:6px 8px;font:inherit}
+.role-student .tonly{display:none}
+@media print{header,button,select,#login,#tour,nav{display:none!important}body{background:#fff;color:#000}.card{background:#fff;border-color:#999;color:#000}.mu{color:#444}.tag{border:1px solid #000;color:#000;background:#fff}}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f3f6fb;--cd:#fff;--cd2:#f7f9fd;--bd:#d3dbe8;--tx:#13203a;--mu:#586a88;--ac:#059669;--g:#0ea271;--y:#d99a0b;--r:#dc3f3f;--b:#2b7fd9;--n:#9aa8bf;--in:#e9eef6;--s2:#e3e9f3;--glow:#bfe9dc88;--hov:#00000008;}}
+:root[data-theme="light"]{--bg:#f3f6fb;--cd:#fff;--cd2:#f7f9fd;--bd:#d3dbe8;--tx:#13203a;--mu:#586a88;--ac:#059669;--g:#0ea271;--y:#d99a0b;--r:#dc3f3f;--b:#2b7fd9;--n:#9aa8bf;--in:#e9eef6;--s2:#e3e9f3;--glow:#bfe9dc88;--hov:#00000008;}
+@media print{:root,:root[data-theme]{--bg:#f3f6fb;--cd:#fff;--cd2:#f7f9fd;--bd:#d3dbe8;--tx:#13203a;--mu:#586a88;--ac:#059669;--g:#0ea271;--y:#d99a0b;--r:#dc3f3f;--b:#2b7fd9;--n:#9aa8bf;--in:#e9eef6;--s2:#e3e9f3;--glow:#bfe9dc88;--hov:#00000008;}}
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet"><style>
+/* ===== LearnMap redesign: "Field Notebook" ===== */
+:root{--bg:#0f0d16;--cd:#181523;--cd2:#1d1a2b;--bd:#2e2943;--tx:#f5efe4;--mu:#a097b4;--ac:#ff8a5b;--g:#5fe0a2;--y:#ffc857;--r:#ff5d73;--b:#6cb6ff;--n:#4a4462;--in:#120f1c;--s2:#241f36;--glow:#ff8a5b22;--hov:#ffffff0a;--rail:236px;--serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'DM Sans',system-ui,-apple-system,sans-serif}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f0e4;--cd:#fffaf0;--cd2:#fffdf7;--bd:#e2d6bd;--tx:#231c2e;--mu:#706684;--ac:#e0562b;--g:#1f9d6b;--y:#c98a0a;--r:#d1344b;--b:#2b7fd9;--n:#c9bda3;--in:#f0e7d4;--s2:#ede2cb;--glow:#e0562b18;--hov:#0000000a}}
+:root[data-theme="light"]{--bg:#f6f0e4;--cd:#fffaf0;--cd2:#fffdf7;--bd:#e2d6bd;--tx:#231c2e;--mu:#706684;--ac:#e0562b;--g:#1f9d6b;--y:#c98a0a;--r:#d1344b;--b:#2b7fd9;--n:#c9bda3;--in:#f0e7d4;--s2:#ede2cb;--glow:#e0562b18;--hov:#0000000a}
+:root[data-theme="dark"]{--bg:#0f0d16;--cd:#181523;--cd2:#1d1a2b;--bd:#2e2943;--tx:#f5efe4;--mu:#a097b4;--ac:#ff8a5b;--g:#5fe0a2;--y:#ffc857;--r:#ff5d73;--b:#6cb6ff;--n:#4a4462;--in:#120f1c;--s2:#241f36;--glow:#ff8a5b22;--hov:#ffffff0a}
+
+body{font-family:var(--sans);font-size:14px;background:
+ radial-gradient(700px 500px at 100% 0,var(--glow),transparent 70%),
+ radial-gradient(600px 400px at 0 100%,var(--glow),transparent 70%),var(--bg);
+ background-attachment:fixed;letter-spacing:.005em}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;z-index:0;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>")}
+main,header{position:relative;z-index:1}
+
+/* ---- side rail ---- */
+header{position:fixed;left:0;top:0;bottom:0;width:var(--rail);flex-direction:column;align-items:stretch;gap:8px;padding:22px 14px 16px;border-bottom:0;border-right:1px solid var(--bd);background:color-mix(in srgb,var(--cd) 82%,transparent);backdrop-filter:blur(14px);flex-wrap:nowrap;overflow-y:auto;z-index:10}
+.logo{font-family:var(--serif);font-weight:600;font-size:28px;letter-spacing:-.02em;padding:0 8px;display:flex;align-items:baseline;gap:2px}
+.logo b{font-style:italic;font-weight:500;color:var(--ac)}
+.logo::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--ac);margin-left:4px;box-shadow:0 0 0 4px var(--glow),0 0 14px var(--ac)}
+.pill{align-self:flex-start;margin:0 8px 10px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--mu);border:1px dashed var(--bd)}
+nav{flex-direction:column;overflow:visible;flex:1;gap:2px}
+nav button{display:flex;align-items:center;gap:12px;text-align:left;padding:10px 12px;border-radius:12px;color:var(--mu);font-weight:500;transition:.2s;position:relative}
+nav button::before{content:"";width:22px;height:22px;display:grid;place-items:center;border-radius:7px;background:var(--in);font-size:12px;color:var(--mu);flex:none;transition:.2s}
+nav button:nth-child(1)::before{content:"◐"}nav button:nth-child(2)::before{content:"⇪"}nav button:nth-child(3)::before{content:"☰"}
+nav button:nth-child(4)::before{content:"✦"}nav button:nth-child(5)::before{content:"⚑"}nav button:nth-child(6)::before{content:"≈"}
+nav button:nth-child(7)::before{content:"⌁"}nav button:nth-child(8)::before{content:"⚙"}
+nav button:hover{background:var(--hov);color:var(--tx)}
+nav button.on{background:linear-gradient(90deg,var(--glow),transparent);color:var(--tx);box-shadow:none}
+nav button.on::before{background:var(--ac);color:#1a0d07}
+nav button.on::after{content:"";position:absolute;left:-14px;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--ac)}
+header>select,header>button{width:100%}
+#who{font-size:11.5px;padding:10px 8px 2px;border-top:1px dashed var(--bd);line-height:1.4}
+main{margin-left:var(--rail);max-width:1220px;padding:34px 36px 80px}
+
+/* ---- type ---- */
+h2{font-family:var(--serif);font-weight:500;font-size:38px;letter-spacing:-.025em;line-height:1.1;margin:0 0 22px}
+h2 .mu{font-family:var(--sans);display:block;font-size:13px!important;letter-spacing:.01em;margin-top:8px}
+h3{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.14em;color:var(--mu)}
+h3::before{content:"";width:14px;height:2px;background:var(--ac);border-radius:2px}
+
+/* ---- cards ---- */
+.card{background:linear-gradient(165deg,var(--cd2),var(--cd));border-radius:22px;padding:20px 22px;position:relative;box-shadow:0 1px 0 #ffffff08 inset,0 18px 40px -26px #000a;transition:transform .25s,border-color .25s}
+.card:hover{border-color:color-mix(in srgb,var(--ac) 40%,var(--bd))}
+.grid{gap:16px}
+.kpi{overflow:hidden;padding:20px 20px 18px}
+.kpi b{font-family:var(--serif);font-weight:500;font-size:52px;line-height:1;letter-spacing:-.04em;margin-bottom:8px}
+.kpi span{text-transform:uppercase;letter-spacing:.1em;font-size:10.5px}
+.kpi::after{content:"";position:absolute;right:-22px;top:-22px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,var(--ac),transparent 68%);opacity:.22}
+.k5>.kpi:nth-child(4)::after{background:radial-gradient(circle,var(--r),transparent 68%);opacity:.3}
+.k5>.kpi:nth-child(5)::after{background:radial-gradient(circle,var(--y),transparent 68%);opacity:.3}
+.k5>.kpi:nth-child(3)::after{background:radial-gradient(circle,var(--g),transparent 68%);opacity:.3}
+
+/* ---- bars & tags ---- */
+.bar{gap:10px;margin:9px 0}
+.bar i{flex-basis:140px;color:var(--tx);opacity:.8}
+.bar div{height:10px;border-radius:99px;background:var(--in);box-shadow:inset 0 1px 2px #0006}
+.bar u{border-radius:99px;transform-origin:left;animation:grow .9s cubic-bezier(.2,.8,.2,1) both;position:relative}
+.bar u::after{content:"";position:absolute;right:0;top:0;bottom:0;width:10px;border-radius:99px;background:#fff;opacity:.35;filter:blur(2px)}
+.bar span{font-variant-numeric:tabular-nums;font-weight:600;min-width:34px;text-align:right}
+.tag{font-size:10.5px;letter-spacing:.04em;padding:2px 10px;font-weight:700}
+
+/* ---- controls ---- */
+button.p{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#ffd24a));color:#1c0e07;border-radius:12px;padding:9px 16px;box-shadow:0 8px 22px -10px var(--ac);transition:.2s}
+button.p:hover{transform:translateY(-1px);box-shadow:0 12px 26px -10px var(--ac)}
+button.s{background:var(--s2);border-radius:12px;transition:.2s}
+button.s:hover{border-color:var(--ac)}
+input,select{border-radius:10px;padding:8px 10px;transition:.2s}
+input:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 3px var(--glow)}
+input[type=checkbox]{accent-color:var(--ac)}
+.flow span{border-radius:99px;padding:5px 12px;font-size:12.5px;background:var(--in)}
+.card.flow{border-radius:99px;padding:12px 22px}
+
+/* ---- tables ---- */
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;padding:10px 8px}
+td{padding:11px 8px}
+tr.cl{transition:.15s}tr.cl:hover{background:var(--hov);transform:translateX(3px)}
+
+/* ---- learning map ---- */
+.card:has(>svg){background-image:radial-gradient(var(--bd) 1px,transparent 1.4px);background-size:22px 22px}
+svg line{stroke-dasharray:7 7;animation:flowdash 1.2s linear infinite;opacity:.8}
+.node rect{transition:.2s;filter:drop-shadow(0 6px 10px #0005)}
+.node:hover rect{filter:drop-shadow(0 0 12px currentColor) brightness(1.2)}
+.node text{font-family:var(--sans);font-weight:600}
+
+/* ---- modal / tour / login ---- */
+.modal{background:#05030acc;backdrop-filter:blur(8px)}
+.modal>div{border-radius:26px 26px 0 0;box-shadow:0 30px 80px -20px #000;animation:rise .35s both}
+@media(min-width:700px){.modal>div{border-radius:26px}}
+#tour .card{border-radius:20px;box-shadow:0 20px 60px -10px #000c}
+#login .card{padding:28px}
+#login .logo{font-size:38px;padding:0}
+pre{border-radius:14px}
+
+/* ---- motion ---- */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes flowdash{to{stroke-dashoffset:-14}}
+main>h2,main>.grid>.card,main>.card,main>.flow{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+main>.grid>.card:nth-child(2){animation-delay:.05s}main>.grid>.card:nth-child(3){animation-delay:.1s}
+main>.grid>.card:nth-child(4){animation-delay:.15s}main>.grid>.card:nth-child(5){animation-delay:.2s}main>.grid>.card:nth-child(6){animation-delay:.25s}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- mobile: rail becomes top bar ---- */
+@media(max-width:860px){
+ header{position:sticky;top:0;bottom:auto;width:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:10px 14px;border-right:0;border-bottom:1px solid var(--bd);overflow:visible}
+ .pill{display:none}.logo{font-size:22px}
+ nav{flex-direction:row;overflow-x:auto;flex:1 1 100%;order:5;gap:4px}
+ nav button{padding:8px 12px;flex:none}nav button::before{display:none}nav button.on::after{display:none}
+ header>select,header>button{width:auto}#who{border:0;padding:0}
+ main{margin-left:0;padding:22px 16px 70px}h2{font-size:30px}.bar i{flex-basis:96px}
+}
+@media print{header{display:none!important}main{margin-left:0;padding:0}body::before{display:none}.card{box-shadow:none;animation:none}}
+
+</style></head><body>
+<header><div class="logo">Learn<b>Map</b></div><span class="pill">Demo classroom loaded</span><nav id="nav"></nav><select id="subj" onchange="chSubj(this.value)" title="Subject" style="display:none"></select><button class="p tonly" onclick="tour(0)">Guided demo</button><button class="s" id="th" onclick="tgTheme()">Theme</button><span id="who" class="mu"></span><button class="s" id="out" onclick="showLogin()" style="display:none">Log out</button></header>
+<div id="login" style="position:fixed;inset:0;z-index:20;background:radial-gradient(800px 400px at 70% 0,var(--glow),transparent),var(--bg);display:flex;align-items:center;justify-content:center;padding:16px"><div class="card" style="max-width:390px;width:100%;position:relative"><button class="s" id="th2" onclick="tgTheme()" style="position:absolute;top:12px;right:12px">Theme</button><div class="logo" style="font-size:26px">Learn<b>Map</b></div><p class="mu" style="margin:4px 0 16px">From marks → understanding → diagnosis → action</p>
+<label class="mu">Teacher login or Student ID</label><input id="lg-u" style="width:100%;margin:4px 0 10px" autocomplete="username" onkeydown="if(event.key=='Enter')doLogin()"><label class="mu">Password</label><input id="lg-p" type="password" style="width:100%;margin:4px 0 10px" autocomplete="current-password" onkeydown="if(event.key=='Enter')doLogin()">
+<label class="mu">Subject (for teacher login)</label><select id="lg-s" style="width:100%;margin:4px 0 10px"></select><div id="lg-e" class="er" style="min-height:20px"></div><button class="p" style="width:100%" onclick="doLogin()">Sign in</button>
+<div class="flow" style="margin-top:12px"><button class="s" onclick="qf('teacher','teacher123')">Fill teacher demo</button><button class="s" onclick="qf('S002','student123')">Fill student demo</button></div>
+<p class="mu" style="font-size:12px;margin-top:14px">Demo credentials<br>Teacher: <b>teacher</b> / <b>teacher123</b> (pick the subject below; switch any time from the header)<br>Student: <b>S001 … S030</b> (Algebra) or <b>T001 … T024</b> (Programming) / <b>student123</b><br><i>Login is simulated in the browser for the hackathon demo; it is not real security.</i></p></div></div>
+<main id="app"></main><div id="tour"></div><div id="modal"></div>
+<script>
+var cur='alg',RM={};let C={NS:['Number Systems',[]],AB:['Algebra Basics',['NS']],LE:['Linear Equations',['AB']],FA:['Factorisation',['AB']],QF:['Quadratic Formula',['AB']],QE:['Quadratic Equations',['FA']],QA:['Quadratic Applications',['QE']]};
+let ids=Object.keys(C);const AID=['A01','A02','A03'];
+// concept, skill (C=conceptual,P=procedural,A=application), correct answer
+let Q=[['NS','C','A'],['NS','P','B'],['AB','C','C'],['AB','P','A'],['LE','P','D'],['FA','C','B'],['FA','P','C'],['QF','P','A'],['QF','A','D'],['QE','C','B'],['QE','P','C'],['QE','A','A'],['QA','A','B'],['QA','A','D']];
+const SK={C:'Conceptual',P:'Procedural',A:'Application'};
+const anc=k=>C[k][1].flatMap(p=>[p,...anc(p)]),dep=k=>ids.filter(x=>C[x][1].includes(k));
+const COL={prereq:'r',recurring:'r',conceptual:'r',application:'y',developing:'y',isolated:'y',improving:'b',mastered:'g',na:'n'};
+const TL={prereq:'Prerequisite gap',recurring:'Recurring gap',conceptual:'Conceptual gap',application:'Application gap',developing:'Developing',isolated:'Isolated mistake',improving:'Improving',mastered:'Mastered',na:'Not assessed'};
+const GAP=t=>['prereq','recurring','conceptual'].includes(t);
+const pct=x=>x==null?'–':Math.round(x*100)+'%',$=i=>document.getElementById(i);
+// ---------- demo data (seeded RNG) ----------
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const NM='Sara Shaikh,Rohan Mehta,Ayesha Khan,Zoya Ansari,Dev Patel,Imran Qureshi,Neha Joshi,Karan Shah,Meera Iyer,Farhan Sayed,Anika Rao,Yash Kulkarni,Hina Memon,Arjun Nair,Tara Desai,Omar Siddiqui,Pooja Pawar,Vikram Rane,Sana Patel,Rahul Jadhav,Isha Kapoor,Aman Verma,Riya Gupta,Kabir Bhat,Mira Fernandes,Sameer Naik,Diya Menon,Nikhil Rao,Laila Hasan,Tejas More'.split(',');
+const ARCH=['A','B','C','D','E'],PERS={A:'Strong + isolated mistakes',B:'Weak prerequisite',C:'Strong concepts, weak application',D:'Recurring gap',E:'Improving learner',strong:'Strong',mid:'Developing',};
+function pr(ar,k,sk,a){k=RM[k]||k;if(ar=='A')return .96;
+if(ar=='B'){const m={AB:[.15,.2,.15],FA:[.25,.25,.2],QF:[.3,.3,.3],QE:[.3,.35,.3],QA:[.3,.3,.3]};return(m[k]||[.88,.88,.88])[a]}
+if(ar=='C')return sk=='A'?.1:.96;
+if(ar=='D')return k=='FA'?[.25,.3,.3][a]:.92;
+if(ar=='E'){const m={AB:[.2,.5,.97],FA:[.2,.5,.97]};return(m[k]||[.92,.92,.92])[a]}
+return ar=='mid'?.7:.93}
+let S=NM.map((n,i)=>{const ar=i<5?ARCH[i]:['strong','B','mid','C','D','E','strong','B','mid','strong'][i%10],r=rng(i*97+13);
+const ans=[0,1,2].map(a=>Q.map((q,j)=>{if(i==0&&a==2&&j==10)return'D';return r()<pr(ar,q[0],q[1],a)?q[2]:'ABCD'.replace(q[2],'')[Math.floor(r()*3)]}));
+return{id:'S'+String(i+1).padStart(3,'0'),name:n,cls:'FY CSE',ar,ans}});
+let IV=[],view='dash',sid=null,mapSel=null,mapMode='class',D={};
+// ---------- analysis engine ----------
+function ms(s,a,k){if(!s.ans[a])return null;let n=0,c=0;Q.forEach((q,i)=>{if(q[0]==k){n++;if(s.ans[a][i]==q[2])c++}});return n?{m:c/n,n,c}:null}
+function lat(s,k){for(let a=2;a>=0;a--)if(ms(s,a,k))return a;return-1}
+function diag(s,k){const a=lat(s,k);if(a<0)return{s,k,type:'na'};
+const h=[0,1,2].map(i=>{const r=ms(s,i,k);return r&&r.m}),cur=h[a],prior=h.slice(0,a).filter(x=>x!=null);
+let n=0,c=0,an=0,ac=0,nn=0,nc=0;const wrong=[];let wAll=0;
+for(let i=0;i<3;i++)if(s.ans[i])Q.forEach((q,j)=>{if(q[0]!=k)return;const ok=s.ans[i][j]==q[2];n++;c+=ok;if(!ok)wAll++;if(q[1]=='A'){an++;ac+=ok}else{nn++;nc+=ok}if(i==a&&!ok)wrong.push('Q'+(j+1))});
+const ov=c/n,app=an?ac/an:null,non=nn?nc/nn:null;
+const pre=[...new Set(anc(k))].map(p=>{const pa=lat(s,p);return pa<0?null:{k:p,m:ms(s,pa,p).m}}).filter(x=>x&&x.m<.55).sort((x,y)=>x.m-y.m);
+const rec=cur<.6&&prior.length>0&&prior.every(x=>x<.6),ap=app!=null&&non!=null&&non>=.75&&app<.5,imp=prior.length>0&&cur-prior[0]>=.25&&cur>=.6;
+let t;if(cur<.6&&pre.length)t='prereq';else if(rec)t='recurring';else if(ap)t='application';else if(cur<.6)t='conceptual';else if(imp)t='improving';else if(cur>=.8&&prior.every(x=>x>=.7))t='mastered';else if(wrong.length&&ov>=.75&&prior.every(x=>x>=.6))t='isolated';else t='developing';
+const sc={prereq:.6+.1*pre.length+(.6-cur)*.5+(rec?.1:0),recurring:.6+.1*prior.length+(.6-cur)*.4,application:.5+(non-app)*.4,conceptual:.5+(.6-cur)*.6,improving:.7,mastered:.9,isolated:.8,developing:.5}[t];
+const d={s,k,type:t,cur,h,prior,wrong,wAll,n,ov,app,non,pre,rec,ap,imp,score:Math.min(.98,sc),a};
+d.rec_=recText(d);return d}
+function recText(d){const K=C[d.k][0],P=d.pre[0]&&C[d.pre[0].k][0];return{
+prereq:`Conduct a short revision of ${P} before reteaching ${K}.`,recurring:`Schedule targeted intervention on ${K} and reassess.`,application:`Provide application-based problem-solving questions on ${K}.`,conceptual:`Provide targeted conceptual practice on ${K}.`,isolated:'No immediate intervention required. Monitor in the next assessment.',improving:'Continue current practice and gradually increase difficulty.',mastered:'Maintain with periodic mixed review.',developing:`Continue practice on ${K}; check again next assessment.`,na:'Not yet assessed.'}[d.type]}
+function run(){D={};S.forEach(s=>{D[s.id]=Object.fromEntries(ids.map(k=>[k,diag(s,k)]))})}
+const overall=s=>{const a=s.ans[2]?2:s.ans[1]?1:0;return s.ans[a].filter((x,i)=>x==Q[i][2]).length/Q.length};
+const all=()=>S.flatMap(s=>ids.map(k=>D[s.id][k])).filter(d=>d.type!='na');
+const tag=t=>`<span class="tag ${COL[t]}">${TL[t]}</span>`;
+function bar(l,v,c,txt){return`<div class="bar"><i title="${l}">${l}</i><div><u class="${c}" style="width:${Math.round(v*100)}%"></u></div><span>${txt??pct(v)}</span></div>`}
+const mc=m=>m>=.8?'g':m>=.6?'y':'r';
+function cls(k){const ds=S.map(s=>D[s.id][k]).filter(d=>d.type!='na'),avg=ds.reduce((a,d)=>a+d.cur,0)/(ds.length||1);
+return{ds,avg,red:ds.filter(d=>GAP(d.type)),yel:ds.filter(d=>['developing','application','isolated','improving'].includes(d.type)),grn:ds.filter(d=>d.type=='mastered')}}
+// ---------- views ----------
+const TABS=[['dash','Dashboard'],['imp','Data Import'],['stu','Students'],['map','Learning Map'],['iv','Interventions'],['rep','Reports']];
+function go(v,x){if(role=='student')v='prof';view=v;if(v=='prof'&&x)sid=x;render()}
+function render0(){if(role=='student')view='prof';run();$('nav').innerHTML=(role=='student'?[['prof','My learning profile']]:TABS).map(t=>`<button class="${view==t[0]||(view=='prof'&&t[0]=='stu')?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('');
+$('app').innerHTML={dash,imp,stu,map,iv,rep,prof,cfg,trend}[view]();if(view=='map')setTimeout(()=>{},0)}
+function dash(){const ds=all(),red=ds.filter(d=>GAP(d.type)),att=S.filter(s=>ids.some(k=>['prereq','recurring'].includes(D[s.id][k].type)));
+const nA=[0,1,2].filter(a=>S.some(s=>s.ans[a])).length;let tc=0,tn=0;S.forEach(s=>s.ans.forEach(a=>a&&a.forEach((x,i)=>{tn++;tc+=x==Q[i][2]})));
+const cnt=t=>ds.filter(d=>d.type==t).length,rootC={};ds.filter(d=>d.type=='prereq').forEach(d=>{const p=d.pre[0].k;rootC[p]=(rootC[p]||0)+1});
+const sk={};S.forEach(s=>s.ans.forEach(a=>a&&a.forEach((x,i)=>{const q=Q[i][1];(sk[q]=sk[q]||[0,0]);sk[q][0]+=x==Q[i][2];sk[q][1]++})));
+const tm=[0,1,2].map(a=>{const ss=S.filter(s=>s.ans[a]);return ss.length?ss.reduce((t,s)=>t+s.ans[a].filter((x,i)=>x==Q[i][2]).length,0)/(ss.length*Q.length):null});
+const mxg=Math.max(1,...['prereq','recurring','conceptual','application','isolated'].map(cnt));
+return`<h2>Teacher dashboard <span class="mu" style="font-size:13px;font-weight:400">${SUBJ[cur].name} · ${SUBJ[cur].cls} · from assessment to diagnosis to action</span></h2>
+<div class="grid k5">${[['Total students',S.length],['Assessments analyzed',nA],['Class mastery',pct(tc/tn)],['Critical learning gaps',red.length],['Students needing attention',att.length]].map(x=>`<div class="card kpi"><b>${x[1]}</b><span>${x[0]}</span></div>`).join('')}</div>
+<div class="grid c2" style="margin-top:14px">
+<div class="card"><h3>Class concept mastery</h3>${ids.map(k=>{const c=cls(k);return bar(C[k][0],c.avg,mc(c.avg))}).join('')}</div>
+<div class="card"><h3>Most common learning gaps</h3>${['prereq','recurring','conceptual','application','isolated'].map(t=>bar(TL[t],cnt(t)/mxg,COL[t],cnt(t))).join('')}</div>
+<div class="card"><h3>Prerequisite weaknesses (root causes)</h3>${Object.entries(rootC).sort((a,b)=>b[1]-a[1]).map(([k,v])=>bar(C[k][0],v/Math.max(...Object.values(rootC)),'r',v+' downstream gaps')).join('')||'<span class="mu">None detected</span>'}</div>
+<div class="card"><h3>Recurring vs isolated mistakes</h3>${bar('Recurring gaps',cnt('recurring')/mxg,'r',cnt('recurring'))}${bar('Isolated mistakes',cnt('isolated')/mxg,'y',cnt('isolated'))}<p class="mu" style="font-size:12px">Isolated mistakes need monitoring only; recurring gaps need intervention.</p></div>
+<div class="card"><h3>Conceptual vs procedural vs application</h3>${Object.keys(SK).map(k=>bar(SK[k],sk[k][0]/sk[k][1],mc(sk[k][0]/sk[k][1])))}</div>
+<div class="card"><h3>Performance over time</h3>${tm.map((v,i)=>v==null?'':bar(AID[i],v,mc(v))).join('')}</div></div>
+<div class="card flow" style="margin-top:14px"><span>Assessment</span>→<span>Question analysis</span>→<span>Concept map</span>→<span>Prerequisites</span>→<span>Diagnosis</span>→<span>Action</span><button class="p" style="margin-left:auto" onclick="go('imp')">Import & analyze</button></div>`}
+function stu(){return`<h2>Students</h2><div class="card tbl"><table><tr><th>Student</th><th>Overall</th><th>Critical gaps</th><th>Persona (demo)</th></tr>${S.map(s=>{const g=ids.filter(k=>GAP(D[s.id][k].type)).length;return`<tr class="cl" onclick="go('prof','${s.id}')"><td>${s.name}<div class="mu" style="font-size:11px">${s.id}</div></td><td>${pct(overall(s))}</td><td>${g?`<span class="tag r">${g}</span>`:'<span class="tag g">0</span>'}</td><td class="mu">${PERS[s.ar]||''}</td></tr>`}).join('')}</table></div>`}
+function prof(){const s=S.find(x=>x.id==sid),ds=ids.map(k=>D[s.id][k]).filter(d=>d.type!='na');
+const grp=f=>ds.filter(d=>f(d.type)).map(d=>`<div class="bar"><i style="flex-basis:170px">${C[d.k][0]}</i><div><u class="${COL[d.type]}" style="width:${Math.round(d.cur*100)}%"></u></div><span>${pct(d.cur)}</span> <a href="#" onclick="ev('${s.id}','${d.k}');return false" style="color:var(--b)">Why?</a></div>`).join('')||'<span class="mu">None</span>';
+const top=ds.filter(d=>GAP(d.type)||d.type=='application').sort((a,b)=>b.score-a.score)[0];
+const hist=[0,1,2].map(a=>s.ans[a]?s.ans[a].filter((x,i)=>x==Q[i][2]).length/Q.length:null);
+return`<button class="s tonly" onclick="go('stu')">← Students</button><h2 style="margin-top:10px">${s.name} <span class="mu" style="font-size:13px;font-weight:400">${s.cls} · ${s.id}</span></h2>
+<div class="grid c2"><div class="card"><h3>Overall mastery</h3><b style="font-size:30px">${pct(overall(s))}</b><div style="margin-top:8px">${hist.map((v,i)=>v==null?'':bar(AID[i],v,mc(v))).join('')}</div></div>
+<div class="card"><h3>Critical gaps</h3>${grp(GAP)}<h3 style="margin-top:12px">Developing</h3>${grp(t=>['developing','application','isolated','improving'].includes(t))}<h3 style="margin-top:12px">Mastered</h3>${grp(t=>t=='mastered')}</div></div>
+<div class="grid c2" style="margin-top:14px"><div class="card"><h3>Why is this student struggling?</h3>${top?evHTML(top,false):'<p>No significant learning gaps detected. Keep monitoring.</p>'}${top?`<button class="s" onclick="ev('${s.id}','${top.k}')">Why was this identified as a gap?</button>`:''}</div>
+<div class="card"><h3>Action</h3>${top?`<div class="flow">${actionSteps(top).map(a=>`<span>${a}</span>`).join('→')}</div><p>${top.rec_}</p><button class="p tonly" onclick="mkIv('${s.id}','${top.k}')">Create intervention</button>`:'<p class="mu">No intervention needed.</p>'}</div></div>`}
+function actionSteps(d){const P=d.pre[0]&&C[d.pre[0].k][0],K=C[d.k][0];return d.type=='prereq'?[`Revise ${P}`,`Practice ${K}`,`Reassess`]:d.type=='application'?[`Application problems on ${K}`,'Reassess']:[`Targeted practice on ${K}`,'Reassess']}
+function evHTML(d,full=true){const K=C[d.k][0];return`<div style="line-height:1.8">Concept mastery (${K}): <b>${pct(d.cur)}</b><br>${d.pre.map(p=>`Prerequisite mastery (${C[p.k][0]}): <b>${pct(p.m)}</b><br>`).join('')}Related incorrect questions: <b>${d.wAll}/${d.n}</b> across ${d.h.filter(x=>x!=null).length} assessment(s)<br>Assessment history: ${d.h.map(x=>pct(x)).join(' → ')}<br>${d.app!=null?`Application performance: <b>${pct(d.app)}</b>${d.non!=null?` · conceptual/procedural: <b>${pct(d.non)}</b>`:''}<br>`:''}${d.wrong.length?`Supporting questions (latest): ${d.wrong.join(', ')}<br>`:''}Evidence score: <b>${d.score.toFixed(2)}</b></div><p><b>Likely diagnosis:</b> ${tag(d.type)} ${d.type=='prereq'?`— evidence suggests the difficulty with ${K} is associated with a weak ${C[d.pre[0].k][0]} foundation.`:'— evidence suggests this pattern; it is not proof of cause.'}</p>${full?`<p><b>Recommendation:</b> ${d.rec_}</p>`:''}`}
+function ev(id,k){const d=D[id][k],s=S.find(x=>x.id==id);$('modal').innerHTML=`<div class="modal" onclick="if(event.target==this)cm()"><div><h3>Why was this identified as a gap?</h3><b>${s.name} · ${C[k][0]}</b>${evHTML(d)}<div class="flow"><button class="p tonly" onclick="mkIv('${id}','${k}')">Create intervention</button><button class="s" onclick="cm()">Close</button></div></div></div>`}
+const cm=()=>$('modal').innerHTML='';
+function mkIv(id,k){if(role!='teacher')return;const d=D[id][k],tk=d.type=='prereq'?d.pre[0].k:k;if(IV.some(i=>i.sid==id&&i.k==tk&&i.after==null)){cm();return go('iv')}const m=ms(S.find(s=>s.id==id),lat(S.find(s=>s.id==id),tk),tk).m;
+IV.push({sid:id,k:tk,type:d.type,before:m,after:null,steps:['Review prerequisite','Assign learning material','Complete 5 practice questions','Reassess','Compare mastery'],done:[]});cm();go('iv')}
+function iv(){return`<h2>Interventions</h2>${IV.length?IV.map((v,n)=>{const s=S.find(x=>x.id==v.sid);return`<div class="card" style="margin-bottom:12px"><b>${s.name}</b> · ${C[v.k][0]} ${tag(v.type)}<div style="margin:8px 0">${v.steps.map((st,i)=>`<label style="display:block"><input type="checkbox" ${v.done.includes(i)?'checked':''} onchange="tg(${n},${i})"> ${st}</label>`).join('')}</div>${bar('Before',v.before,mc(v.before))}${v.after==null?`<div class="flow"><input id="af${n}" type="number" min="0" max="100" placeholder="Reassessed mastery %" style="width:170px"><button class="p" onclick="sa(${n})">Record result</button></div>`:bar('After',v.after,mc(v.after))+`<p class="${v.after>v.before?'ok':'er'}"><b>${v.after>v.before?'+':''}${Math.round((v.after-v.before)*100)} points</b> change in mastery</p>`}</div>`}).join(''):'<div class="card mu">No interventions yet. Open a student, inspect a gap and click "Create intervention".</div>'}`}
+function tg(n,i){const d=IV[n].done;d.includes(i)?d.splice(d.indexOf(i),1):d.push(i)}
+function sa(n){const v=parseFloat($('af'+n).value);if(isNaN(v)||v<0||v>100){$('af'+n).style.borderColor='var(--r)';return}IV[n].after=v/100;render()}
+// learning map
+let POS={NS:[70,160],AB:[210,160],LE:[360,60],FA:[360,160],QF:[360,260],QE:[510,160],QA:[650,160]};
+function map(){const st=S.find(s=>s.id==(mapMode=='stu'?sid||S[1].id:'')),sel=mapSel;const info=k=>{if(mapMode=='stu'){const d=D[st.id][k];return{t:d.type,txt:pct(d.cur)}}const c=cls(k);return{t:c.ds.length?(c.avg<.6?'conceptual':c.avg<.8?'developing':'mastered'):'na',txt:pct(c.avg)}};
+const edges=ids.flatMap(k=>C[k][1].map(p=>`<line x1="${POS[p][0]+50}" y1="${POS[p][1]}" x2="${POS[k][0]-50}" y2="${POS[k][1]}" style="stroke:var(--n)" stroke-width="2"/>`)).join('');
+const nodes=ids.map(k=>{const i=info(k),c={r:'#ef5b5b',y:'#f5b942',g:'#10b981',b:'#4aa3ff',n:'#44506a'}[COL[i.t]];return`<g class="node" onclick="mapSel='${k}';render()"><rect x="${POS[k][0]-50}" y="${POS[k][1]-26}" width="100" height="52" rx="12" style="fill:var(--in)" stroke="${c}" stroke-width="${sel==k?4:2}"/><text x="${POS[k][0]}" y="${POS[k][1]-4}" text-anchor="middle" style="font-size:10.5px">${C[k][0].replace(' ','\u00a0').split('\u00a0')[0]}</text><text x="${POS[k][0]}" y="${POS[k][1]+9}" text-anchor="middle" style="font-size:10.5px">${C[k][0].split(' ').slice(1).join(' ')}</text><text x="${POS[k][0]}" y="${POS[k][1]+22}" text-anchor="middle" style="fill:${c};font-weight:700">${i.txt}</text></g>`}).join('');
+return`<h2>Learning map</h2><div class="flow" style="margin-bottom:10px"><button class="${mapMode=='class'?'p':'s'}" onclick="mapMode='class';render()">Class view</button><button class="${mapMode=='stu'?'p':'s'}" onclick="mapMode='stu';sid=sid||S[1].id;render()">Student view</button>${mapMode=='stu'?`<select onchange="sid=this.value;render()">${S.map(s=>`<option value="${s.id}" ${s.id==st.id?'selected':''}>${s.name}</option>`)}</select>`:''}<span class="mu">🟢 Mastered 🟡 Developing 🔴 Gap 🔵 Improving ⚪ Not assessed</span></div>
+<div class="card" style="overflow-x:auto"><svg viewBox="0 0 740 320" style="min-width:620px;width:100%">${edges}${nodes}</svg></div><div id="det" style="margin-top:14px">${sel?detail(sel,st):'<div class="card mu">Select a concept to see mastery, prerequisites, dependents, affected students and recommendations.</div>'}</div>`}
+function detail(k,st){const c=cls(k);let att=0,cor=0;S.forEach(s=>{if(mapMode=='stu'&&s!=st)return;const a=lat(s,k);if(a>=0){const r=ms(s,a,k);att+=r.n;cor+=r.c}});
+const types={};c.ds.forEach(d=>types[d.type]=(types[d.type]||0)+1);const d1=mapMode=='stu'?D[st.id][k]:null;
+return`<div class="card"><h3>${C[k][0]} ${mapMode=='stu'?tag(d1.type):''}</h3><div class="grid c2"><div>Mastery: <b>${mapMode=='stu'?pct(d1.cur):pct(c.avg)}</b><br>Questions attempted (latest): ${att} · correct: ${cor}<br>Prerequisites: ${C[k][1].map(p=>C[p][0]).join(', ')||'none'}<br>Dependent concepts: ${dep(k).map(p=>C[p][0]).join(', ')||'none'}<br>Error patterns: ${Object.entries(types).map(([t,n])=>`${TL[t]} ×${n}`).join(', ')||'–'}${mapMode=='stu'?`<p><b>Recommendation:</b> ${d1.rec_}</p>`:''}</div>
+<div>${mapMode=='class'?`<b>Class:</b> <span class="tag r">Critical ${c.red.length}</span> <span class="tag y">Developing ${c.yel.length}</span> <span class="tag g">Mastered ${c.grn.length}</span><div style="margin-top:8px" class="mu">Affected students (click):</div>${c.red.map(d=>`<a href="#" style="color:var(--b);display:block" onclick="go('prof','${d.s.id}');return false">${d.s.name} — ${TL[d.type]}${d.type=='prereq'?' ('+C[d.pre[0].k][0]+' weak)':''}</a>`).join('')||'<span class="mu">None</span>'}`:`<button class="s" onclick="ev('${st.id}','${k}')">Why this status?</button> <button class="s" onclick="go('prof','${st.id}')">Open profile</button>`}</div></div></div>`}
+// import
+let pend=null;let HDR=['student_id','student_name','class_name','assessment_id','assessment_name',...Q.map((_,i)=>'Q'+(i+1))];
+const csvOf=(bad)=>{const rows=S.map(s=>[s.id,s.name,s.cls,'A03','Assessment 3',...s.ans[2]]);if(bad){rows[2][0]='';rows[3][9]='X';rows[4][0]=rows[5][0];rows[6][3]='A09'}return[HDR.join(','),...rows.map(r=>r.join(','))].join('\n')};
+function imp(){return`<h2>Data import</h2><div class="card"><div class="flow"><input type="file" accept=".csv,.xlsx,.xls" onchange="fl(this)"><button class="p" onclick="vd(csvOf(false),'demo_assessment_A03.csv')">Use valid demo file</button><button class="s" onclick="vd(csvOf(true),'demo_with_errors.csv')">Use demo file with errors</button></div><p class="mu">Flow: upload → preview → validate → confirm → import → analyze → diagnoses. Expected columns: <code>${HDR.slice(0,6).join(', ')} … Q14</code>; answers A–D; assessment IDs A01–A03. (XLSX: export to CSV first.)</p><details><summary class="mu">Sample CSV template</summary><pre>${HDR.join(',')}\n${S[0].id},${S[0].name},${S[0].cls},A03,Assessment 3,${Q.map(q=>q[2]).join(',')}</pre></details></div><div id="vres" style="margin-top:14px"></div>`}
+function fl(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>vd(r.result,f.name);r.readAsText(f)}
+function vd0(txt,name){const L=txt.trim().split(/\r?\n/).map(l=>l.split(',').map(x=>x.trim())),h=L[0],err=[],rows=[],seen=new Set();
+HDR.forEach(c=>{if(!h.includes(c))err.push(`Header: column "${c}" is missing.`)});
+if(!err.length)L.slice(1).forEach((r,i)=>{const o=Object.fromEntries(h.map((c,j)=>[c,r[j]])),n=i+2,e0=err.length;
+if(!o.student_id)err.push(`Row ${n}: student_id is missing.`);else if(seen.has(o.student_id))err.push(`Row ${n}: duplicate student_id "${o.student_id}".`);else seen.add(o.student_id);
+if(!AID.includes(o.assessment_id))err.push(`Row ${n}: invalid assessment_id "${o.assessment_id}". Expected ${AID.join('/')}.`);
+Q.forEach((_,j)=>{const v=o['Q'+(j+1)];if(!v)err.push(`Row ${n}, Q${j+1}: missing answer.`);else if(!'ABCD'.includes(v)||v.length!=1)err.push(`Row ${n}, Q${j+1}: invalid answer "${v}". Expected A/B/C/D.`)});
+if(err.length==e0)rows.push(o)});
+pend=err.length?null:rows;$('vres').innerHTML=`<div class="card"><b>${name}</b>${err.length?`<p class="er">✗ ${err.length} validation error(s) — nothing imported</p><pre>${err.slice(0,25).join('\n')}</pre>`:`<p class="ok">✓ File validated · ${rows.length} rows</p><div class="tbl"><table><tr>${HDR.slice(0,4).map(x=>`<th>${x}</th>`).join('')}<th>Answers</th></tr>${rows.slice(0,4).map(o=>`<tr><td>${o.student_id}</td><td>${o.student_name}</td><td>${o.class_name}</td><td>${o.assessment_id}</td><td>${Q.map((_,j)=>o['Q'+(j+1)]).join('')}</td></tr>`).join('')}</table></div><button class="p" onclick="doImp()" style="margin-top:10px">Confirm import & analyze</button>`}</div>`}
+function doImp(){const before=all().filter(d=>GAP(d.type)).length;let nw=0,resp=0,as=new Set();pend.forEach(o=>{const a=AID.indexOf(o.assessment_id);as.add(a);let s=S.find(x=>x.id==o.student_id);if(!s){s={id:o.student_id,name:o.student_name||o.student_id,cls:o.class_name,ar:'imported',ans:[null,null,null]};S.push(s);nw++}s.ans[a]=Q.map((_,j)=>o['Q'+(j+1)]);resp+=Q.length});
+run();const gaps=all().filter(d=>GAP(d.type)).length;$('vres').innerHTML=`<div class="card"><p class="ok">✓ File validated<br>✓ ${pend.length} students imported (${nw} new, ${pend.length-nw} updated)<br>✓ ${as.size} assessment(s) detected<br>✓ ${resp} responses analyzed<br>✓ ${gaps} learning gaps identified (${gaps-before>=0?'+':''}${gaps-before} vs before)</p><button class="p" onclick="go('dash')">Open dashboard</button> <button class="s" onclick="go('map')">Open learning map</button></div>`;pend=null;$('nav').querySelectorAll('button')}
+// reports
+let rsid=null;
+function rep(){const s=S.find(x=>x.id==(rsid||S[1].id));rsid=s.id;const ds=ids.map(k=>D[s.id][k]).filter(d=>d.type!='na');
+return`<h2>Reports <button class="s" onclick="window.print()">Print class report</button></h2><div class="grid c2"><div class="card"><h3>Class learning gap report</h3><div class="tbl"><table><tr><th>Concept</th><th>Mastery</th><th>Critical</th><th>Developing</th><th>Mastered</th></tr>${ids.map(k=>{const c=cls(k);return`<tr><td>${C[k][0]}</td><td>${pct(c.avg)}</td><td>${c.red.length}</td><td>${c.yel.length}</td><td>${c.grn.length}</td></tr>`}).join('')}</table></div></div>
+<div class="card"><h3>Student learning report</h3><select onchange="rsid=this.value;render()">${S.map(x=>`<option value="${x.id}" ${x.id==s.id?'selected':''}>${x.name}</option>`)}</select><p><b>${s.name}</b> · ${s.cls} · Overall ${pct(overall(s))} · Assessments: ${s.ans.filter(Boolean).length}</p>${ds.map(d=>`<p style="margin:6px 0"><b>${C[d.k][0]}</b> ${pct(d.cur)} ${tag(d.type)}<br><span class="mu">${d.rec_}</span></p>`).join('')}<button class="s" onclick="window.print()">Print / save as PDF</button></div></div>
+<div class="card" style="margin-top:14px"><h3>Concept intervention report</h3>${IV.length?IV.map(v=>`<p>${S.find(s=>s.id==v.sid).name} · ${C[v.k][0]}: ${pct(v.before)} → ${v.after==null?'pending':pct(v.after)}</p>`).join(''):'<span class="mu">No interventions recorded yet.</span>'}</div>`}
+
+TABS.splice(4,0,['trend','Trends'],['cfg','Config']);
+function render(){render0();sv()}
+function sv(){try{localStorage.setItem('lm_'+cur,JSON.stringify({IV,Q,P:ids.map(k=>C[k][1]),QT}))}catch(e){}}
+let QT=Q.map((q,i)=>'Question '+(i+1));
+try{const x=JSON.parse(localStorage.getItem('lm_alg')||'null');if(x){IV=x.IV;x.Q.forEach((q,i)=>Q[i]=q);ids.forEach((k,i)=>C[k][1]=x.P[i]);QT=x.QT}}catch(e){}
+// ---- config
+function tp(k,p){const a=C[k][1];a.includes(p)?a.splice(a.indexOf(p),1):a.push(p);render()}
+function cfg(){return`<h2>Configure questions & concepts</h2><p class="mu">Changes re-run the whole analysis instantly and are saved in this browser.</p>
+<div class="card tbl"><table><tr><th>ID</th><th>Question text</th><th>Concept</th><th>Skill type</th><th>Answer</th></tr>${Q.map((q,i)=>`<tr><td>Q${i+1}</td><td><input value="${QT[i]}" onchange="QT[${i}]=this.value;render()" style="width:100%;min-width:140px"></td>
+<td><select onchange="Q[${i}][0]=this.value;render()">${ids.map(k=>`<option value="${k}" ${q[0]==k?'selected':''}>${C[k][0]}</option>`).join('')}</select></td>
+<td><select onchange="Q[${i}][1]=this.value;render()">${Object.keys(SK).map(k=>`<option value="${k}" ${q[1]==k?'selected':''}>${SK[k]}</option>`).join('')}</select></td>
+<td><select onchange="Q[${i}][2]=this.value;render()">${[...'ABCD'].map(k=>`<option ${q[2]==k?'selected':''}>${k}</option>`).join('')}</select></td></tr>`).join('')}</table></div>
+<div class="card" style="margin-top:14px"><h3>Prerequisites</h3>${ids.slice(1).map((k,j)=>`<p style="margin:8px 0"><b>${C[k][0]}</b> needs: ${ids.slice(0,j+1).map(p=>`<label style="margin-right:10px"><input type="checkbox" ${C[k][1].includes(p)?'checked':''} onchange="tp('${k}','${p}')"> ${C[p][0]}</label>`).join('')}</p>`).join('')}</div>`}
+// ---- trends
+let tk='FA';
+const avgA=(k,a)=>{const v=S.map(s=>ms(s,a,k)).filter(Boolean);return v.length?v.reduce((t,r)=>t+r.m,0)/v.length:null};
+function lbl(d){if(d.type=='na')return'–';const p=d.prior;if(!p.length)return'Single assessment';if(d.cur<.6&&p.every(x=>x<.6))return'Persistent gap';if(d.cur<.6&&p.every(x=>x>=.6))return'Newly emerging gap';if(d.cur-p[0]>=.25)return'Improving learner';return'Stable'}
+function trend(){const cl=['#10b981','#4aa3ff','#f5b942','#ef5b5b','#b78cff','#ff8fb1','#7fe0e0'],X=a=>70+a*190,Y=v=>190-v*160;
+const ds=S.map(s=>D[s.id][tk]),cnt={};ds.forEach(d=>{const l=lbl(d);cnt[l]=(cnt[l]||0)+1});
+const svg=`<svg viewBox="0 0 520 230" style="width:100%">${[0,.5,1].map(v=>`<line x1="70" x2="450" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--bd)"/><text x="30" y="${Y(v)+4}">${v*100}%</text>`).join('')}${[0,1,2].map(a=>`<text x="${X(a)-12}" y="215">${AID[a]}</text>`).join('')}${ids.map((k,i)=>{const pts=[0,1,2].map(a=>[a,avgA(k,a)]).filter(p=>p[1]!=null);return`<polyline fill="none" stroke="${cl[i]}" stroke-width="${k==tk?4:1.5}" points="${pts.map(p=>X(p[0])+','+Y(p[1])).join(' ')}"/>`}).join('')}</svg>`;
+return`<h2>Concept trends</h2><div class="grid c2"><div class="card"><h3>Class mastery over assessments</h3>${svg}<div class="flow">${ids.map((k,i)=>`<span style="border-color:${cl[i]};cursor:pointer" onclick="tk='${k}';render()">${C[k][0]}</span>`).join('')}</div></div>
+<div class="card"><h3>${C[tk][0]} — learner patterns</h3>${Object.entries(cnt).map(([l,n])=>bar(l,n/S.length,l.includes('gap')?'r':l.includes('Impr')?'b':'g',n)).join('')}</div></div>
+<div class="card tbl" style="margin-top:14px"><table><tr><th>Student</th>${AID.map(a=>`<th>${a}</th>`).join('')}<th>Pattern</th></tr>${S.map((s,i)=>`<tr class="cl" onclick="go('prof','${s.id}')"><td>${s.name}</td>${ds[i].h.map(x=>`<td>${pct(x)}</td>`).join('')}<td>${lbl(ds[i])}</td></tr>`).join('')}</table></div>`}
+// ---- import: normalized csv + xlsx
+function fl(i){const f=i.files[0];if(!f)return;const r=new FileReader();
+if(/\.xlsx?$/i.test(f.name)){if(!window.XLSX){$('vres').innerHTML='<div class="card er">XLSX reader failed to load. Export the sheet as CSV instead.</div>';return}
+r.onload=()=>{try{const wb=XLSX.read(r.result,{type:'array'});vd(XLSX.utils.sheet_to_csv(wb.Sheets[wb.SheetNames[0]]),f.name)}catch(e){$('vres').innerHTML='<div class="card er">Could not read this Excel file.</div>'}};r.readAsArrayBuffer(f);return}
+r.onload=()=>vd(r.result,f.name);r.readAsText(f)}
+function vd(txt,name){const L=txt.trim().split(/\r?\n/).map(l=>l.split(',').map(x=>x.trim())),h=L[0];
+if(h.includes('question_id')&&h.includes('student_answer')){const ix=n=>h.indexOf(n),m={},bad=[];
+L.slice(1).forEach((r,i)=>{const q=r[ix('question_id')],qi=/^Q\d+$/.test(q)?+q.slice(1)-1:-1;if(qi<0||qi>=Q.length){bad.push(`Row ${i+2}: unknown question_id "${q}".`);return}
+const k=r[ix('student_id')]+'|'+r[ix('assessment_id')];m[k]=m[k]||{s:r[ix('student_id')],a:r[ix('assessment_id')],v:Array(Q.length).fill('')};m[k].v[qi]=r[ix('student_answer')]});
+if(bad.length){$('vres').innerHTML=`<div class="card"><p class="er">✗ ${bad.length} error(s)</p><pre>${bad.slice(0,25).join('\n')}</pre></div>`;return}
+return vd0([HDR.join(','),...Object.values(m).map(o=>[o.s,o.s,'FY CSE',o.a,'Imported',...o.v].join(','))].join('\n'),name+' (normalized format; one assessment per file)')}
+vd0(txt,name)}
+// ---- guided demo
+const TS=()=>{const sB=S.find(s=>D[s.id][ids[5]].type=='prereq')||S[1],sC=S.find(s=>ids.some(k=>D[s.id][k].type=='application'))||S[2];return[
+['Class overview','Real class numbers: mastery, critical gaps, who needs attention.',()=>go('dash')],
+['Bulk import','Click "Use valid demo file", then confirm to analyze the class.',()=>go('imp')],
+['Learning map','The key downstream concept is selected: see the class gap and affected students.',()=>{mapMode='class';mapSel=ids[5];go('map')}],
+[sB.name+': prerequisite gap','Not just "bad at this topic": a weak prerequisite is the likely root. Evidence panel is open.',()=>{go('prof',sB.id);ev(sB.id,ids[5])}],
+['Trends','Persistent, improving and newly emerging gaps across assessments.',()=>{cm();tk=ids[3];go('trend')}],
+[sC.name+': application gap','Concepts strong, application weak, so the action is different.',()=>{cm();go('prof',sC.id)}],
+['Interventions','Create one from a gap, record the reassessment, see the improvement.',()=>{cm();go('iv')}]]};
+function tour(n){const t=TS();if(n==null||n>=t.length){$('tour').innerHTML='';return}t[n][2]();$('tour').innerHTML=`<div class="card" style="position:fixed;left:12px;right:12px;bottom:12px;max-width:520px;margin:auto;z-index:30;border-color:var(--ac)"><b>Step ${n+1}/${t.length}: ${t[n][0]}</b><p class="mu" style="margin:6px 0">${t[n][1]}</p><div class="flow"><button class="s" onclick="tour(${Math.max(0,n-1)})">Back</button><button class="p" onclick="tour(${n+1})">${n+1==t.length?'Finish':'Next'}</button><button class="s" onclick="tour()">Exit</button></div></div>`}
+function setTh(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('lmth',t)}catch(e){}['th','th2'].forEach(i=>{const e=$(i);if(e)e.textContent=t=='light'?'🌙 Dark mode':'☀️ Light mode'})}
+function tgTheme(){setTh(document.documentElement.dataset.theme=='light'?'dark':'light')}
+{let t=null;try{t=localStorage.getItem('lmth')}catch(e){}if(t!='light'&&t!='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';setTh(t)}
+
+// ---- multi-subject support
+const PN='Aarav Bhosale,Bhavna Kale,Chetan Pillai,Dhruv Sharma,Esha Kamat,Faizan Mulla,Gauri Lokhande,Harsh Tiwari,Ira Chopra,Jay Mistry,Kavya Reddy,Lakshya Singh,Mahi Dalal,Nitin Gawde,Opal Dias,Parth Kadam,Quincy Pinto,Rutuja Bane,Sahil Parab,Tanvi Rege,Uday Thakur,Vaani Sawant,Wasim Shaikh,Yami Deshmukh'.split(',');
+function mk(names,pf,cl,off){return names.map((n,i)=>{const ar=i<5?ARCH[i]:['strong','B','mid','C','D','E','strong','B','mid','strong'][i%10],r=rng(i*97+13+off);
+const ans=[0,1,2].map(a=>Q.map((q,j)=>{if(i==0&&a==2&&j==10)return'D';return r()<pr(ar,q[0],q[1],a)?q[2]:'ABCD'.replace(q[2],'')[Math.floor(r()*3)]}));
+return{id:pf+String(i+1).padStart(3,'0'),name:n,cls:cl,ar,ans}})}
+const SUBJ={alg:{name:'Algebra',cls:'FY CSE',C,Q,QT,S,POS,RM:{},IV},
+pgm:{name:'Programming Fundamentals',cls:'SY CSE',RM:{CF:'AB',LP:'FA',AR:'QF',RC:'QE',PS:'QA'},IV:[],S:[],
+C:{DT:['Data Types',[]],CF:['Control Flow',['DT']],FN:['Functions',['CF']],LP:['Loops',['CF']],AR:['Arrays & Strings',['CF']],RC:['Recursion',['FN','LP']],PS:['Problem Solving',['RC']]},
+Q:[['DT','C','A'],['DT','P','B'],['CF','C','C'],['CF','P','A'],['FN','P','D'],['LP','C','B'],['LP','P','C'],['AR','P','A'],['AR','A','D'],['RC','C','B'],['RC','P','C'],['RC','A','A'],['PS','A','B'],['PS','A','D']],
+QT:Q.map((q,i)=>'Question '+(i+1)),POS:{DT:[70,160],CF:[210,160],FN:[360,60],LP:[360,160],AR:[360,260],RC:[510,160],PS:[650,160]}}};
+function saveCur(){const o=SUBJ[cur];Object.assign(o,{C,Q,QT,S,POS,RM,IV})}
+function useSubj(k){saveCur();const o=SUBJ[k];cur=k;C=o.C;Q=o.Q;QT=o.QT;S=o.S;POS=o.POS;RM=o.RM;IV=o.IV;ids=Object.keys(C);
+if(!S.length){S=o.S=mk(PN,'T','SY CSE',500);try{const x=JSON.parse(localStorage.getItem('lm_'+k)||'null');if(x){IV=o.IV=x.IV;x.Q.forEach((q,i)=>Q[i]=q);ids.forEach((c,i)=>C[c][1]=x.P[i]);QT=o.QT=x.QT}}catch(e){}}
+mapSel=null;mapMode='class';sid=null;rsid=null;tk=ids[3]}
+function who(){$('who').textContent=user+' ('+role+') · '+SUBJ[cur].name}
+function chSubj(k){cm();tour();useSubj(k);view='dash';who();render()}
+function fillSubj(){const o=Object.keys(SUBJ).map(k=>`<option value="${k}" ${k==cur?'selected':''}>${SUBJ[k].name}</option>`).join('');['lg-s','subj'].forEach(i=>{const e=$(i);if(e)e.innerHTML=o})}
+useSubj('pgm');useSubj('alg');
+let role=null,user=null;
+const qf=(u,p)=>{$('lg-u').value=u;$('lg-p').value=p;$('lg-e').textContent=''};
+function showLogin(){role=null;cm();document.body.classList.remove('role-student');$('login').style.display='flex';$('lg-u').value='';$('lg-p').value='';$('lg-e').textContent='';$('who').textContent='';$('out').style.display='none';$('subj').style.display='none';fillSubj();$('nav').innerHTML='';$('app').innerHTML=''}
+function doLogin(){const u=$('lg-u').value.trim(),p=$('lg-p').value;
+if(u.toLowerCase()=='teacher'&&p=='teacher123'){role='teacher';user='Teacher';useSubj($('lg-s').value||'alg')}
+else{let f=null;Object.keys(SUBJ).forEach(k=>{const s=SUBJ[k].S.find(x=>x.id.toLowerCase()==u.toLowerCase());if(s&&!f)f=[k,s]});if(f&&p=='student123'){useSubj(f[0]);role='student';sid=f[1].id;user=f[1].name}else{$('lg-e').textContent='Invalid ID or password.';return}}
+$('login').style.display='none';who();$('out').style.display='';$('subj').style.display=role=='teacher'?'':'none';
+fillSubj();document.body.classList.toggle('role-student',role=='student');view=role=='student'?'prof':'dash';render()}
+showLogin();
+</script></body></html>
